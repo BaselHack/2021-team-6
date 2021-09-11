@@ -9,7 +9,7 @@ export class LobbyService {
 
   constructor(public afs: AngularFirestore) { }
 
-  public createLobby(lobby: Lobby) {
-    return this.afs.collection('lobbies').add(lobby);
+  public createLobby(lobbyCode: string, lobby: Lobby) {
+    return this.afs.collection('lobbies').doc(lobbyCode).set(lobby);
   }
 }

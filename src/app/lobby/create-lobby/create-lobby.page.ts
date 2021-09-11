@@ -24,13 +24,15 @@ export class CreateLobbyPage implements OnInit {
 
 
   createLobby() {
+    var lobbyCode = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
+
     const lobby: Lobby = {
       public: this.public.value,
       users: [
         {username: this.username.value}
       ]
     }
-    this.lobbyService.createLobby(lobby);
+    this.lobbyService.createLobby(lobbyCode, lobby);
   }
 
   get public() { return this.createLobbyForm.get('public'); }
