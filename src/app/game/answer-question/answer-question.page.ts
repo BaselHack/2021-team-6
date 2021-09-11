@@ -4,6 +4,8 @@ import { QuestionService } from 'src/app/services/question.service';
 import {Lobby} from "../../models/lobby.model";
 import {Question} from "../../models/question.model";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import { CountdownEvent } from 'ngx-countdown';
 
 @Component({
   selector: 'app-answer-question',
@@ -18,7 +20,7 @@ export class AnswerQuestionPage implements OnInit {
   public currentQuestion: Question;
   public answerQuestionForm: FormGroup;
 
-  constructor(private lobbyService: LobbyService, private questionService: QuestionService, public fb: FormBuilder,) {}
+  constructor(private router: Router,private lobbyService: LobbyService, private questionService: QuestionService, public fb: FormBuilder,) {}
 
   ngOnInit() {
     // this.lobbyCode = this.lobbyService.lobbyCode;
@@ -38,5 +40,12 @@ export class AnswerQuestionPage implements OnInit {
   }
 
   public onAnswerQuestion(): void {}
+
+  public onCountDownDone(event: CountdownEvent): void {
+    console.log('Countdown done...')
+    if(event.action === 'done'){
+      this.router.navigate(['rate-answers'], {} );
+    }
+  }
 
 }

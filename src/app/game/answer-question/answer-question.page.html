@@ -8,6 +8,7 @@
   <h2>Lobby Code: {{lobbyCode}}</h2>
   <div *ngIf="currentQuestion">
     <form [formGroup]="answerQuestionForm" (ngSubmit)="onAnswerQuestion()">
+      <countdown [config]="{leftTime:20}" (event)="onCountDownDone($event)"></countdown>
       <ion-list>
         <ion-item>
           <ion-label>{{currentQuestion.question}}</ion-label>
