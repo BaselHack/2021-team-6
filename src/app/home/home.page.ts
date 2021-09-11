@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  constructor(private router: Router) {}
 
-  constructor() {}
+  public onCreateLobby(): void {
+    console.log('Lobby creation pending...');
+    this.router.navigateByUrl('/create-lobby');
+  }
 
+  public onJoinLobby(): void {
+    console.log('Lobby join pending...');
+    this.router.navigateByUrl('/join-lobby');
+  }
 }
