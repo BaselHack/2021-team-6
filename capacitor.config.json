@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "guess-what",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
