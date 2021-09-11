@@ -42,9 +42,9 @@ export class JoinLobbyPage implements OnInit {
     this.lobbyService
       .joinLobby(this.code.value, user)
       .then((docRef) => {
-        console.log(`Lobby to join: ${this.code}`);
+        console.log(`Lobby to join: ${this.code.value}`);
         this.router.navigate(['view-lobby'], {
-          queryParams: { userId: userId, lobbyCode: this.code },
+          queryParams: { userId: userId, lobbyCode: this.code.value },
         });
       })
       .catch((error) => {
