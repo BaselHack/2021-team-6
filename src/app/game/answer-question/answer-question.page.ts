@@ -42,10 +42,14 @@ export class AnswerQuestionPage implements OnInit {
   public onAnswerQuestion(): void {}
 
   public onCountDownDone(event: CountdownEvent): void {
-    console.log('Countdown done...')
     if(event.action === 'done'){
+      const answer = this.answer.value;
+      console.log('Countdown done...')
+      console.log(answer)
       this.router.navigate(['rate-answers'], {} );
     }
   }
+
+  get answer() { return this.answerQuestionForm.get('answer'); }
 
 }
