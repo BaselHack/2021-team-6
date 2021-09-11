@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { DeckService } from '../services/deck.service';
 import { QuestionService } from '../services/question.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { QuestionService } from '../services/question.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  constructor(private router: Router, private questionSvc: QuestionService) {}
+  constructor(private router: Router, private deckSvc: DeckService) {}
 
   public onCreateLobby(): void {
     console.log('Lobby creation pending...');
@@ -22,6 +23,6 @@ export class HomePage {
 
   public onUpdateQuestions(): void {
     console.log('Adding all local questions to repository');
-    this.questionSvc.addAllLocalQuestions();
+    this.deckSvc.createDecks();
   }
 }

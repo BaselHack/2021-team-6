@@ -5,7 +5,6 @@
 </ion-header>
 
 <ion-content>
-  
   <form [formGroup]="createLobbyForm" (ngSubmit)="createLobby()">
     <ion-list>
       <ion-item>
@@ -18,10 +17,20 @@
         <ion-input formControlName="username"></ion-input>
       </ion-item>
 
+      <ion-item>
+        <ion-label>Select a Deck</ion-label>
+        <ion-select formControlName="deck">
+          <ion-select-option
+            *ngFor="let deck of decks; let i = index"
+            value="{{i}}"
+            >{{deck.name}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
     </ion-list>
 
-    <ion-button [disabled]="!createLobbyForm.valid" type="submit" expand="block">Create</ion-button>
-
+    <ion-button [disabled]="!createLobbyForm.valid" type="submit" expand="block"
+      >Create</ion-button
+    >
   </form>
-
 </ion-content>

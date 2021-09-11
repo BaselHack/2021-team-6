@@ -2,7 +2,7 @@ import { Answer } from './answer.model';
 
 export interface Question {
   type: string;
-  deckIds: number[];
+  deckIds: number;
   question: string;
   answer?: Answer;
 }

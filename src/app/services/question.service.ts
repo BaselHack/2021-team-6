@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { Question } from '../models/question.model';
 
 @Injectable({
@@ -21,5 +22,12 @@ export class QuestionService {
           this.createQuestion(question);
         }
       });
+  }
+
+  public getQuestionWithID(questionID: string): Observable<Question> {
+    const lobbyRef: AngularFirestoreDocument<Question> = this.afs.doc(
+      `lobbies/` + questionID
+    );
+    return lobbyRef.valueChanges();
   }
 }

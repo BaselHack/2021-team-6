@@ -6,22 +6,25 @@
 
 <ion-content>
   <ng-container *ngIf="lobby">
-  <h2>Lobby Code: {{lobbyCode}}</h2>
-  <div>
-    <h2>Players</h2>
-    <ion-list>
-      <ion-item *ngFor="let user of lobby.users">
-        <ion-label>{{user.username}} <span>(Host)</span></ion-label>
-      </ion-item>
-    </ion-list>
-  </div>
-  <ion-button size="large" color="danger">Leave</ion-button>
-  <ion-button
-    size="large"
-    color="primary"
-    [disabled]="!isHost"
-    (click)="onStartGame()"
-    >Start</ion-button
-  >
+    <h2>Lobby Code: {{lobbyCode}}</h2>
+    <div>
+      <h2>Players</h2>
+      <ion-list>
+        <ion-item *ngFor="let user of lobby.users">
+          <ion-label>{{user.username}} <span>(Host)</span></ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div>
+      <ion-button size="large" color="danger">Leave</ion-button>
+      <ion-button
+        size="large"
+        color="primary"
+        [disabled]="!isHost"
+        (click)="onStartGame()"
+        >Start</ion-button
+      >
+    </div>
   </ng-container>
 </ion-content>

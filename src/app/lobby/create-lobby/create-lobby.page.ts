@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Deck } from 'src/app/models/deck.model';
 import { Lobby } from 'src/app/models/lobby.model';
+import { DeckService } from 'src/app/services/deck.service';
 import { LobbyService } from 'src/app/services/lobby.service';
 
 @Component({
@@ -12,17 +14,24 @@ import { LobbyService } from 'src/app/services/lobby.service';
 })
 export class CreateLobbyPage implements OnInit {
   createLobbyForm: FormGroup;
+  decks: Deck[];
 
   constructor(
     public lobbyService: LobbyService,
     public fb: FormBuilder,
-    public router: Router
+    public router: Router,
+    public deckSvc: DeckService
   ) {}
 
   ngOnInit() {
     this.createLobbyForm = this.fb.group({
       public: [false],
       username: ['', [Validators.required]],
+      deck: ['', [Validators.required]],
+    });
+
+    this.deckSvc.getAllDecks().subscribe((decks) => {
+      this.decks = decks;
     });
   }
 
@@ -34,6 +43,8 @@ export class CreateLobbyPage implements OnInit {
     const lobby: Lobby = {
       public: this.public.value,
       state: 0,
+      index: 0,
+      questions: this.deck.questions,
       users: [
         {
           username: this.username.value,
@@ -56,5 +67,10 @@ export class CreateLobbyPage implements OnInit {
   }
   get username() {
     return this.createLobbyForm.get('username');
+  }
+
+  get deck() {
+    const index = this.createLobbyForm.get('deck').value;
+    return this.decks[index];
   }
 }
