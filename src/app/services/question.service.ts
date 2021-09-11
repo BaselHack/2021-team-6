@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import { Question } from '../models/question.model';
+import {Lobby} from "../models/lobby.model";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
@@ -21,5 +23,10 @@ export class QuestionService {
           this.createQuestion(question);
         }
       });
+  }
+
+  public getAllQuestions(): Observable<Question[]> {
+    const questionRef: AngularFirestoreCollection<Question> = this.afs.collection('questions');
+    return questionRef.valueChanges();
   }
 }
