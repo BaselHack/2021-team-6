@@ -5,5 +5,15 @@
 </ion-header>
 
 <ion-content>
-
+  <div>
+    <ion-item>
+      <ion-label position="floating">Lobby Code</ion-label>
+      <ion-input [(ngModel)]="code" placeholder="code"></ion-input>
+    </ion-item>
+  </div>
+  <div>
+    <h3>Nearby Lobbies...</h3>
+    <p>To be added</p>
+  </div>
+  <ion-button (click)="onJoin()">Join</ion-button>
 </ion-content>
