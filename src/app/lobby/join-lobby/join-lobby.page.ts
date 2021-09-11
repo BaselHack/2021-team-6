@@ -33,7 +33,7 @@ export class JoinLobbyPage implements OnInit {
 
     this.lobbyService.joinLobby(this.code.value, user).then(docRef => {
       console.log(`Lobby to join: ${this.code}`);
-      this.router.navigate(['view-lobby', this.code.value], { queryParams: { userId: userId }} );
+      this.router.navigate(['view-lobby'], { queryParams: { userId: userId, lobbyCode: this.code }} );
     })
     .catch(error => {
       console.error('Error adding document: ', error);

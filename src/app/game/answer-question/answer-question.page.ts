@@ -10,7 +10,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CountdownEvent } from 'ngx-countdown';
 
 @Component({
@@ -29,11 +29,12 @@ export class AnswerQuestionPage implements OnInit {
     private router: Router,
     private lobbyService: LobbyService,
     private questionService: QuestionService,
+    private route: ActivatedRoute,
     public fb: FormBuilder
   ) {}
 
   ngOnInit() {
-    this.lobbyCode = this.lobbyService.lobbyCode;
+    this.lobbyCode = this.route.snapshot.queryParamMap.get('lobbyCode');
     this.lobbyService.getLobby(this.lobbyCode).subscribe(lobby => {
       this.lobby = lobby;
       this.questions = lobby.questions;

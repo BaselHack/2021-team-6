@@ -32,8 +32,7 @@ export class ViewLobbyPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.lobbyCode = this.route.snapshot.paramMap.get('lobbyCode');
-    this.lobbyCode = this.route.snapshot.paramMap.get('lobbyCode');
+    this.lobbyCode = this.lobbyService.getLobbyCode();
     const userId = this.route.snapshot.queryParamMap.get('userId');
 
     this.lobbyService.getLobby(this.lobbyCode).subscribe(
@@ -45,7 +44,7 @@ export class ViewLobbyPage implements OnInit {
           this.presentAlert();
         }
         if (lobby.state === 1) {
-          this.router.navigateByUrl('/answer-question');
+          this.router.navigate(['answer-question'], { queryParamsHandling: 'preserve' });
         }
       },
       (error) => {
@@ -71,7 +70,7 @@ export class ViewLobbyPage implements OnInit {
   public onStartGame(): void {
     console.log('Game started...');
     this.lobbyService.updateState(1);
-    this.router.navigateByUrl('/answer-question');
+    this.router.navigate(['/answer-question'], { queryParamsHandling: 'preserve' });
   }
 
   async presentAlert() {
