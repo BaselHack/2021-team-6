@@ -2,7 +2,7 @@
   {
     "type": "get-to-know",
     "deckIds": [1],
-    "question": "Where are you from?"
+    "question": "What is your nationanality?"
   },
   {
     "type": "get-to-know",
@@ -22,6 +22,93 @@
   {
     "type": "get-to-know",
     "deckIds": [1],
-    "question": "Which drugs did you already do?"
+    "question": "Which legal drugs did you already do?"
+  },
+  {
+    "type": "fun",
+    "deckIds": [2],
+    "question": "Which player has the sexiest name?"  
+  },
+  {
+    "type": "fun",
+    "deckIds": [2],
+    "question": "Are you a dog or cat person?"  
+  },
+  {
+      "type": "fun",
+      "deckIds": [2],
+      "question": "Are you vegetarian?"  
+  },
+  {
+    "type": "fun",
+    "deckIds": [2],
+    "question": "Are you vegan?"  
+  },
+  {
+    "type": "fun",
+    "deckIds": [2],
+    "question": "Do you have a car?"  
+  },
+  {
+    "type": "fun",
+    "deckIds": [2],
+    "question": "Did you ever go to the hackerton?"  
+  },
+  {
+    "type": "Very personal",
+    "deckIds": [3],
+    "question": "Would you go to the police if your partner killed someone?"  
+  },
+  {
+    "type": "Very personal",
+    "deckIds": [3],
+    "question": "Would you be concerned if your children would come out to be gay?"  
+  },
+  {
+    "type": "Very personal",
+    "deckIds": [3],
+    "question": "Did you ever delete your browser history?"  
+  },
+  {
+    "type": "Very personal",
+    "deckIds": [3],
+    "question": "Did you ever watch porn?"  
+  },
+  {
+    "type": "Very personal",
+    "deckIds": [3],
+    "question": "Did you ever have a threesome?"  
+  },
+  {
+    "type": "Very personal",
+    "deckIds": [3],
+    "question": "Did you ever make out (frensch kiss) with the same sex?"  
+  },
+  {
+    "type": "Traveling",
+    "deckIds": [4],
+    "question": "How many countries have you visit?"  
+  },
+  {
+    "type": "Traveling",
+    "deckIds": [4],
+    "question": "What is your favorite country"  
+  },
+  {
+    "type": "Traveling",
+    "deckIds": [4],
+    "question": "Where else would you like to live?"  
+  },
+  {
+    "type": "Traveling",
+    "deckIds": [4],
+    "question": "What is your favourite city?"  
+  },
+  {
+    "type": "Traveling",
+    "deckIds": [4],
+    "question": "What is your favourite food?"  
   }
 ]
+
+
