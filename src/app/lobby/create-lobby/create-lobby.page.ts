@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Lobby } from 'src/app/models/lobby.model';
 import { LobbyService } from 'src/app/services/lobby.service';
 
@@ -13,7 +14,11 @@ export class CreateLobbyPage implements OnInit {
 
   createLobbyForm: FormGroup;
 
-  constructor(public lobbyService: LobbyService, public fb: FormBuilder,) { }
+  constructor(
+    public lobbyService: LobbyService, 
+    public fb: FormBuilder,
+    public router: Router
+    ) { }
 
   ngOnInit() {
     this.createLobbyForm = this.fb.group({
@@ -29,10 +34,18 @@ export class CreateLobbyPage implements OnInit {
     const lobby: Lobby = {
       public: this.public.value,
       users: [
-        {username: this.username.value}
+        {
+          username: this.username.value,
+          isHost: true
+        }
       ]
     }
-    this.lobbyService.createLobby(lobbyCode, lobby);
+    this.lobbyService.createLobby(lobbyCode, lobby).then(docRef => {
+      this.router.navigate(['view-lobby', lobbyCode]); 
+    })
+    .catch(error => {
+      console.error("Error adding document: ", error);
+    });
   }
 
   get public() { return this.createLobbyForm.get('public'); }

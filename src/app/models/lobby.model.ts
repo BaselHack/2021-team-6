@@ -1,8 +1,9 @@
 export interface Lobby {
     public: boolean;
-    users: [
-        {
-            username: string,
-        }
-    ]
+    users: User[];
+}
+
+export interface User {
+    username: string;
+    isHost: boolean;
 }

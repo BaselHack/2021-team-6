@@ -12,9 +12,9 @@ import { CreateLobbyPage } from './create-lobby.page';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     CreateLobbyPageRoutingModule,
-    ReactiveFormsModule,
   ],
   declarations: [CreateLobbyPage]
 })
