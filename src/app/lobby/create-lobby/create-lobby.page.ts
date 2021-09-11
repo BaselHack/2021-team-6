@@ -59,8 +59,8 @@ export class CreateLobbyPage implements OnInit {
     this.lobbyService
       .createLobby(lobbyCode, lobby)
       .then((docRef) => {
-        this.router.navigate(['view-lobby', lobbyCode], {
-          queryParams: { userId },
+        this.router.navigate(['view-lobby'], {
+          queryParams: { userId, lobbyCode: lobbyCode },
         });
       })
       .catch((error) => {

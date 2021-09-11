@@ -27,7 +27,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'view-lobby/:lobbyCode',
+    path: 'view-lobby',
     loadChildren: () =>
       import('./lobby/view-lobby/view-lobby.module').then(
         (m) => m.ViewLobbyPageModule

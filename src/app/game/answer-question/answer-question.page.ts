@@ -36,11 +36,11 @@ export class AnswerQuestionPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.lobbyCode = this.lobbyService.lobbyCode;
+    this.lobbyCode = this.lobbyService.getLobbyCode();
     this.lobbyService.getLobby(this.lobbyCode).subscribe((lobby) => {
-    console.log('lobbyupdated');
-    this.lobby = lobby;
-    this.questions = lobby.questions;
+      console.log('lobbyupdated');
+      this.lobby = lobby;
+      this.questions = lobby.questions;
     });
 
     this.answerQuestionForm = this.fb.group({
@@ -60,17 +60,19 @@ export class AnswerQuestionPage implements OnInit {
         userID: userId,
       };
 
-      this.lobbyService.addAnswer(answer).finally(() => {
-        console.log(answer);
-        // todo: fix this properly
-        setTimeout(() => {
-          this.router.navigateByUrl('/rate-answers')
-          .then(log => console.log(log))
-          .catch(error => console.error(error));
-        }, 300);
-      })
-      .catch(error => console.error(`whatever: ${error}`));
-
+      this.lobbyService
+        .addAnswer(answer)
+        .finally(() => {
+          console.log(answer);
+          // todo: fix this properly
+          setTimeout(() => {
+            this.router
+              .navigate(['/rate-answers'], { queryParamsHandling: 'preserve' })
+              .then((log) => console.log(log))
+              .catch((error) => console.error(error));
+          }, 300);
+        })
+        .catch((error) => console.error(`whatever: ${error}`));
     }
   }
 
