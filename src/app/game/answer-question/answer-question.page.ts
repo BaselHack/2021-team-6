@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LobbyService } from 'src/app/services/lobby.service';
 import { QuestionService } from 'src/app/services/question.service';
 import { Lobby } from '../../models/lobby.model';
@@ -13,19 +13,22 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { CountdownEvent } from 'ngx-countdown';
 import { Answer } from 'src/app/models/answer.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-answer-question',
   templateUrl: './answer-question.page.html',
   styleUrls: ['./answer-question.page.scss'],
 })
-export class AnswerQuestionPage implements OnInit {
+export class AnswerQuestionPage implements OnInit, OnDestroy {
   public lobby: Lobby;
   public lobbyCode;
   public questions: Question[];
   public currentQuestion: Question;
   public answerQuestionForm: FormGroup;
   public submitted = false;
+
+  private lobbySubscription: Subscription;
 
   constructor(
     private router: Router,
@@ -36,7 +39,7 @@ export class AnswerQuestionPage implements OnInit {
 
   ngOnInit() {
     this.lobbyCode = this.lobbyService.getLobbyCode();
-    this.lobbyService.getLobby().subscribe((lobby) => {
+    this.lobbySubscription = this.lobbyService.getLobby().subscribe((lobby) => {
       console.log('lobbyupdated');
       this.lobby = lobby;
       this.questions = lobby.questions;
@@ -45,6 +48,10 @@ export class AnswerQuestionPage implements OnInit {
     this.answerQuestionForm = this.fb.group({
       answer: ['', [Validators.required]],
     });
+  }
+
+  ngOnDestroy() {
+    this.lobbySubscription.unsubscribe();
   }
 
   public onAnswerQuestion(): void {}
