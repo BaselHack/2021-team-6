@@ -4,6 +4,20 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content *ngIf="selectedQuestion && ownUser">
+  <h2>{{selectedQuestion.question}}</h2>
+  <ion-list>
+    <div *ngFor="let answer of answers">
+      <ng-container *ngIf="answer.userID !== ownUser.id">
+        <ion-label>{{answer.answer}}</ion-label>
+        <ion-select>
+          <div *ngFor="let user of users">
+            <ion-select-option *ngIf="user.id !== ownUser.id"
+              >{{user.username}}</ion-select-option
+            >
+          </div>
+        </ion-select>
+      </ng-container>
+    </div>
+  </ion-list>
 </ion-content>

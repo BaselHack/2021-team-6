@@ -35,7 +35,7 @@ export class ViewLobbyPage implements OnInit {
     this.lobbyCode = this.lobbyService.getLobbyCode();
     const userId = this.route.snapshot.queryParamMap.get('userId');
 
-    this.lobbyService.getLobby(this.lobbyCode).subscribe(
+    this.lobbyService.getLobby().subscribe(
       (lobby) => {
         this.lobby = lobby;
         if (lobby) {

@@ -31,13 +31,12 @@ export class AnswerQuestionPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private lobbyService: LobbyService,
-    private questionService: QuestionService,
     public fb: FormBuilder
   ) {}
 
   ngOnInit() {
     this.lobbyCode = this.lobbyService.getLobbyCode();
-    this.lobbyService.getLobby(this.lobbyCode).subscribe((lobby) => {
+    this.lobbyService.getLobby().subscribe((lobby) => {
       console.log('lobbyupdated');
       this.lobby = lobby;
       this.questions = lobby.questions;
@@ -70,7 +69,7 @@ export class AnswerQuestionPage implements OnInit {
               .navigate(['/rate-answers'], { queryParamsHandling: 'preserve' })
               .then((log) => console.log(log))
               .catch((error) => console.error(error));
-          }, 300);
+          }, 200);
         })
         .catch((error) => console.error(`whatever: ${error}`));
     }

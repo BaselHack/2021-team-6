@@ -23,7 +23,7 @@ export class LobbyService {
     return this.afs.collection('lobbies').doc(lobbyCode).set(lobby);
   }
 
-  public getLobby(lobbyCode: string): Observable<Lobby> {
+  public getLobby(): Observable<Lobby> {
     const lobbyRef: AngularFirestoreDocument<Lobby> = this.afs.doc(
       `lobbies/` + this.getLobbyCode()
     );
