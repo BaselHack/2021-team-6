@@ -14,13 +14,12 @@ export class QuestionService {
   }
 
   public addAllLocalQuestions(): void {
-    const question: Question = {
-      type: 'get-to-know',
-      deckIds: [],
-      question: 'Where are you from?',
-    };
-
-    // const questions
-    this.createQuestion(question);
+    const questions = this.http
+      .get('assets/questions.json')
+      .subscribe((q: Question[]) => {
+        for (const question of q) {
+          this.createQuestion(question);
+        }
+      });
   }
 }
