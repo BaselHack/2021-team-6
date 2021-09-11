@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Lobby } from 'src/app/models/lobby.model';
 import { LobbyService } from 'src/app/services/lobby.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-create-lobby',
@@ -27,6 +28,8 @@ export class CreateLobbyPage implements OnInit {
   }
 
   createLobby() {
+    const userId = uuidv4();
+
     const lobbyCode = (Math.floor(Math.random() * 10000) + 10000)
       .toString()
       .substring(1);
@@ -36,6 +39,7 @@ export class CreateLobbyPage implements OnInit {
       state: 0,
       users: [
         {
+          id: userId,
           username: this.username.value,
           isHost: true,
         },
@@ -44,7 +48,7 @@ export class CreateLobbyPage implements OnInit {
     this.lobbyService
       .createLobby(lobbyCode, lobby)
       .then((docRef) => {
-        this.router.navigate(['view-lobby', lobbyCode]);
+        this.router.navigate(['view-lobby', lobbyCode], { queryParams: { userId: userId } });
       })
       .catch((error) => {
         console.error('Error adding document: ', error);

@@ -11,12 +11,17 @@
     <h2>Players</h2>
     <ion-list>
       <ion-item *ngFor="let user of lobby.users">
-        <ion-label>{{user.username}} <span>(Host)</span></ion-label>
+        <ion-label>{{user.username}} <span *ngIf="user.isHost">(Host)</span></ion-label>
       </ion-item>
     </ion-list>
   </div>
-  <ion-button size="large" color="danger">Leave</ion-button>
   <ion-button
+    size="large"
+    color="danger"
+    (click)="leaveLobby()"
+  >Leave</ion-button>
+  <ion-button
+    *ngIf="user.isHost"
     size="large"
     color="primary"
     [disabled]="!isHost"

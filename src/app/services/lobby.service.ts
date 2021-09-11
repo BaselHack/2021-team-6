@@ -37,4 +37,23 @@ export class LobbyService {
         users: firebase.firestore.FieldValue.arrayUnion(user),
       });
   }
+
+  public leaveLobby(code: string, user: User) {
+    this.lobbyCode = null;
+    return this.afs
+      .collection('lobbies')
+      .doc(code)
+      .update({
+        users: firebase.firestore.FieldValue.arrayRemove(user),
+      });
+  }
+
+  public destroyLobby(code: string) {
+    this.lobbyCode = null;
+    return this.afs
+      .collection('lobbies')
+      .doc(code)
+      .delete();
+  }
+
 }

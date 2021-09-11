@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/lobby.model';
 import { LobbyService } from 'src/app/services/lobby.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-join-lobby',
@@ -22,14 +23,17 @@ export class JoinLobbyPage implements OnInit {
   }
 
   public onJoin(): void {
+    const userId = uuidv4();
 
     const user: User = {
+      id: userId,
       username: this.username.value,
       isHost: false
     };
+
     this.lobbyService.joinLobby(this.code.value, user).then(docRef => {
       console.log(`Lobby to join: ${this.code}`);
-      this.router.navigate(['view-lobby', this.code.value]);
+      this.router.navigate(['view-lobby', this.code.value], { queryParams: { userId: userId }} );
     })
     .catch(error => {
       console.error('Error adding document: ', error);
