@@ -8,11 +8,19 @@
   <h2>Lobby Code: {{lobbyCode}}</h2>
   <div *ngIf="lobby">
     <form [formGroup]="answerQuestionForm" (ngSubmit)="onAnswerQuestion()">
-      <countdown [config]="{leftTime:20}" (event)="onCountDownDone($event)"></countdown>
+      <countdown
+        [config]="{leftTime:5}"
+        (event)="onCountDownDone($event)"
+      ></countdown>
       <ion-list>
         <ion-item>
           <ion-label>{{questions[lobby.index].question}}</ion-label>
-          <ion-input formControlName="answer" placeholder="Answer"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-textarea
+            formControlName="answer"
+            placeholder="answer"
+          ></ion-textarea>
         </ion-item>
       </ion-list>
     </form>

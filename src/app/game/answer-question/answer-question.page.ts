@@ -10,8 +10,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CountdownEvent } from 'ngx-countdown';
+import { Answer } from 'src/app/models/answer.model';
 
 @Component({
   selector: 'app-answer-question',
@@ -24,9 +25,11 @@ export class AnswerQuestionPage implements OnInit {
   public questions: Question[];
   public currentQuestion: Question;
   public answerQuestionForm: FormGroup;
+  public submitted = false;
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private lobbyService: LobbyService,
     private questionService: QuestionService,
     public fb: FormBuilder
@@ -34,30 +37,40 @@ export class AnswerQuestionPage implements OnInit {
 
   ngOnInit() {
     this.lobbyCode = this.lobbyService.lobbyCode;
-    this.lobbyService.getLobby(this.lobbyCode).subscribe(lobby => {
-      this.lobby = lobby;
-      this.questions = lobby.questions;
+    this.lobbyService.getLobby(this.lobbyCode).subscribe((lobby) => {
+    console.log('lobbyupdated');
+    this.lobby = lobby;
+    this.questions = lobby.questions;
     });
 
     this.answerQuestionForm = this.fb.group({
       answer: ['', [Validators.required]],
     });
-
-    // this.questionService.getAllQuestions().subscribe((questions) => {
-    //   this.questions = questions;
-    //   console.log(questions);
-    //   this.currentQuestion = questions[0];
-    // });
   }
 
   public onAnswerQuestion(): void {}
 
   public onCountDownDone(event: CountdownEvent): void {
     if (event.action === 'done') {
-      const answer = this.answer.value;
+      const userId = this.route.snapshot.queryParamMap.get('userId');
+      const answerText = this.answer.value;
       console.log('Countdown done...');
-      console.log(answer);
-      this.router.navigate(['rate-answers'], {});
+      const answer: Answer = {
+        answer: answerText,
+        userID: userId,
+      };
+
+      this.lobbyService.addAnswer(answer).finally(() => {
+        console.log(answer);
+        // todo: fix this properly
+        setTimeout(() => {
+          this.router.navigateByUrl('/rate-answers')
+          .then(log => console.log(log))
+          .catch(error => console.error(error));
+        }, 300);
+      })
+      .catch(error => console.error(`whatever: ${error}`));
+
     }
   }
 

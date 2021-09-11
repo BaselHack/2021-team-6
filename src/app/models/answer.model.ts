@@ -1,5 +1,5 @@
 export interface Answer {
   answer: string;
-  ownerID: string;
-  guesses: [{ id: number }];
+  userID: string;
+  guesses?: [{ id: number }];
 }

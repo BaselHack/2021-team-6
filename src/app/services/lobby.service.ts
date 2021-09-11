@@ -7,6 +7,7 @@ import {
 import { Observable } from 'rxjs';
 import { Lobby, User } from '../models/lobby.model';
 import firebase from 'firebase/app';
+import { Answer } from '../models/answer.model';
 
 @Injectable({
   providedIn: 'root',
@@ -57,5 +58,14 @@ export class LobbyService {
     this.afs.collection('lobbies').doc(this.lobbyCode).update({
       state: newState,
     });
+  }
+
+  public addAnswer(answer: Answer) {
+    return this.afs
+      .collection('lobbies')
+      .doc(this.lobbyCode)
+      .update({
+        answers: firebase.firestore.FieldValue.arrayUnion(answer),
+      });
   }
 }
