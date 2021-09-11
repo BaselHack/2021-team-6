@@ -44,6 +44,9 @@ export class ViewLobbyPage implements OnInit {
         } else if (!this.user.isHost) {
           this.presentAlert();
         }
+        if (lobby.state === 1) {
+          this.router.navigateByUrl('/answer-question');
+        }
       },
       (error) => {
         if (!this.user.isHost) {
@@ -67,6 +70,7 @@ export class ViewLobbyPage implements OnInit {
 
   public onStartGame(): void {
     console.log('Game started...');
+    this.lobbyService.updateState(1);
     this.router.navigateByUrl('/answer-question');
   }
 

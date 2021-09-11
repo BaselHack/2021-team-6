@@ -50,10 +50,12 @@ export class LobbyService {
 
   public destroyLobby(code: string) {
     this.lobbyCode = null;
-    return this.afs
-      .collection('lobbies')
-      .doc(code)
-      .delete();
+    return this.afs.collection('lobbies').doc(code).delete();
   }
 
+  public updateState(newState: number): void {
+    this.afs.collection('lobbies').doc(this.lobbyCode).update({
+      state: newState,
+    });
+  }
 }
