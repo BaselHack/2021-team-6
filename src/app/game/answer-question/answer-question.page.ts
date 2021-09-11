@@ -51,7 +51,7 @@ export class AnswerQuestionPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.lobbySubscription.unsubscribe();
+    // this.lobbySubscription.unsubscribe();
   }
 
   public onAnswerQuestion(): void {}
@@ -65,7 +65,7 @@ export class AnswerQuestionPage implements OnInit, OnDestroy {
         answer: answerText,
         userID: userId,
       };
-
+      this.lobbySubscription.unsubscribe();
       this.lobbyService
         .addAnswer(answer)
         .finally(() => {
