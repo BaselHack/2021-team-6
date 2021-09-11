@@ -15,8 +15,8 @@ export class UserService {
     if (this.activeUser === null) {
       const userId = this.route.snapshot.queryParamMap.get('userId');
       this.activeUser = lobby.users?.find((x) => x.id === userId);
-      return this.activeUser;
     }
+    return this.activeUser;
   }
 
   public setUser(user: User): void {
