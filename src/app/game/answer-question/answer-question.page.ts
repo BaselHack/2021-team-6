@@ -76,7 +76,7 @@ export class AnswerQuestionPage implements OnInit, OnDestroy {
               .navigate(['/rate-answers'], { queryParamsHandling: 'preserve' })
               .then((log) => console.log(log))
               .catch((error) => console.error(error));
-          }, 200);
+          }, 500);
         })
         .catch((error) => console.error(`whatever: ${error}`));
     }
