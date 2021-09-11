@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-join-lobby',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./join-lobby.page.scss'],
 })
 export class JoinLobbyPage implements OnInit {
+  public code = '';
 
-  constructor() { }
+  constructor(private router: Router) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  public onJoin(): void {
+    console.log(`Lobby to join: ${this.code}`);
+    this.router.navigateByUrl('/view-lobby');
   }
-
 }
