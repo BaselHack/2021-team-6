@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Question } from '../models/question.model';
 
@@ -24,10 +24,8 @@ export class QuestionService {
       });
   }
 
-  public getQuestionWithID(questionID: string): Observable<Question> {
-    const lobbyRef: AngularFirestoreDocument<Question> = this.afs.doc(
-      `lobbies/` + questionID
-    );
-    return lobbyRef.valueChanges();
+  public getAllQuestions(): Observable<Question[]> {
+    const questionRef: AngularFirestoreCollection<Question> = this.afs.collection('questions');
+    return questionRef.valueChanges();
   }
 }

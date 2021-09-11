@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { CountdownModule } from 'ngx-countdown';
+
 
 import { IonicModule } from '@ionic/angular';
 
@@ -13,7 +15,9 @@ import { AnswerQuestionPage } from './answer-question.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    AnswerQuestionPageRoutingModule
+    AnswerQuestionPageRoutingModule,
+    ReactiveFormsModule,
+    CountdownModule,
   ],
   declarations: [AnswerQuestionPage]
 })
