@@ -17,13 +17,13 @@ export class LobbyService {
 
   public getLobby(lobbyCode: string): Observable<Lobby> {
     const lobbyRef: AngularFirestoreDocument<Lobby> = this.afs.doc(`lobbies/` + lobbyCode);
-    return lobbyRef.valueChanges()
+    return lobbyRef.valueChanges();
   }
 
   public joinLobby(lobbyCode: string, user: User) {
     return this.afs.collection('lobbies').doc(lobbyCode).update({
       users: firebase.firestore.FieldValue.arrayUnion(user)
-    })
+    });
   }
 
 }

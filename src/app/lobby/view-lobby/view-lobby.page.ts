@@ -17,10 +17,10 @@ export class ViewLobbyPage implements OnInit {
   constructor(private lobbyService: LobbyService, private router: Router, private route: ActivatedRoute,public fb: FormBuilder,) {}
 
   ngOnInit() {
-    this.lobbyCode = this.route.snapshot.paramMap.get("lobbyCode");
+    this.lobbyCode = this.route.snapshot.paramMap.get('lobbyCode');
     this.lobbyService.getLobby(this.lobbyCode).subscribe(lobby => {
       this.lobby = lobby;
-    })
+    });
   }
 
 

@@ -1,0 +1,27 @@
+[
+  {
+    "type": "get-to-know",
+    "deckIds": [1],
+    "question": "Where are you from?"
+  },
+  {
+    "type": "get-to-know",
+    "deckIds": [1],
+    "question": "How old are you?"
+  },
+  {
+    "type": "get-to-know",
+    "deckIds": [1],
+    "question": "Are you single?"
+  },
+  {
+    "type": "get-to-know",
+    "deckIds": [1],
+    "question": "What's your profession?"
+  },
+  {
+    "type": "get-to-know",
+    "deckIds": [1],
+    "question": "Which drugs did you already do?"
+  }
+]

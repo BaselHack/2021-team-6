@@ -16,26 +16,25 @@ export class JoinLobbyPage implements OnInit {
 
   ngOnInit() {
     this.joinLobbyForm = this.fb.group({
-      'username': ['', [Validators.required]],
-      'code': ['', [Validators.required]],
+      username: ['', [Validators.required]],
+      code: ['', [Validators.required]],
     });
   }
 
   public onJoin(): void {
 
-    let user: User = {
+    const user: User = {
       username: this.username.value,
       isHost: false
-    }
+    };
     this.lobbyService.joinLobby(this.code.value, user).then(docRef => {
       console.log(`Lobby to join: ${this.code}`);
-      this.router.navigate(['view-lobby', this.code.value]); 
+      this.router.navigate(['view-lobby', this.code.value]);
     })
     .catch(error => {
-      console.error("Error adding document: ", error);
+      console.error('Error adding document: ', error);
     });;
 
-    
   }
 
   get code() { return this.joinLobbyForm.get('code'); }
