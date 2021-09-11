@@ -13,7 +13,7 @@ import { CreateLobbyPage } from './create-lobby.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    CreateLobbyPageRoutingModule
+    CreateLobbyPageRoutingModule,
   ],
   declarations: [CreateLobbyPage]
 })
