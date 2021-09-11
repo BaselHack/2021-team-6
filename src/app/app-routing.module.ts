@@ -11,6 +11,26 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'join-lobby',
+    loadChildren: () => import('./lobby/join-lobby/join-lobby.module').then( m => m.JoinLobbyPageModule)
+  },
+  {
+    path: 'view-lobby',
+    loadChildren: () => import('./lobby/view-lobby/view-lobby.module').then( m => m.ViewLobbyPageModule)
+  },
+  {
+    path: 'answer-question',
+    loadChildren: () => import('./game/answer-question/answer-question.module').then( m => m.AnswerQuestionPageModule)
+  },
+  {
+    path: 'rate-answers',
+    loadChildren: () => import('./game/rate-answers/rate-answers.module').then( m => m.RateAnswersPageModule)
+  },
+  {
+    path: 'scoreboard',
+    loadChildren: () => import('./game/scoreboard/scoreboard.module').then( m => m.ScoreboardPageModule)
+  },
 ];
 
 @NgModule({
