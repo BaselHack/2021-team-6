@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { QuestionService } from '../services/question.service';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private questionSvc: QuestionService) {}
 
   public onCreateLobby(): void {
     console.log('Lobby creation pending...');
@@ -17,5 +18,10 @@ export class HomePage {
   public onJoinLobby(): void {
     console.log('Lobby join pending...');
     this.router.navigateByUrl('/join-lobby');
+  }
+
+  public onUpdateQuestions(): void {
+    console.log('Adding all local questions to repository');
+    this.questionSvc.addAllLocalQuestions();
   }
 }
