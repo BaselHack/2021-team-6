@@ -19,21 +19,26 @@ export class ScoreboardPage implements OnInit, OnDestroy {
   public currentQuestion: Question;
   public guessChart: GuessChart[] = [];
   public barColors;
+  public user: User;
   private lobbySubscription: Subscription;
   private initialized = false;
-  private user: User;
   private index;
 
-  constructor(private lobbyService: LobbyService, private router: Router, private userService: UserService) {}
+  constructor(
+    private lobbyService: LobbyService,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.lobbyCode = this.lobbyService.getLobbyCode();
     this.lobbySubscription = this.lobbyService.getLobby().subscribe((lobby) => {
       console.log('this.lobby', this.lobby);
       console.log('lobby', lobby);
-      if(this.lobby !== null && this.lobby.index !== lobby.index) {
+      if (this.lobby && this.lobby.index !== lobby.index) {
         this.router.navigate(['answer-question'], {
-          queryParamsHandling: 'preserve',});
+          queryParamsHandling: 'preserve',
+        });
       }
       this.lobby = lobby;
       this.questions = lobby.questions;
@@ -43,8 +48,6 @@ export class ScoreboardPage implements OnInit, OnDestroy {
         this.initChartdata();
         this.initialized = true;
       }
-
-
     });
   }
 
@@ -109,10 +112,11 @@ export class ScoreboardPage implements OnInit, OnDestroy {
   nextQuestion() {
     console.log(this.lobby.questions.length - 1);
     console.log(this.lobby.index);
-    if(this.lobby.questions.length - 1 !== this.lobby.index) {
-      this.lobbyService.nextQuestion(this.lobby.index + 1).then(_ => {
+    if (this.lobby.questions.length - 1 !== this.lobby.index) {
+      this.lobbyService.nextQuestion(this.lobby.index + 1).then((_) => {
         this.router.navigate(['answer-question'], {
-          queryParamsHandling: 'preserve',});
+          queryParamsHandling: 'preserve',
+        });
       });
     }
   }
