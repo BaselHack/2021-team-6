@@ -8,16 +8,16 @@
   <h2>Lobby Code: {{lobbyCode}}</h2>
 
   <div *ngIf="lobby">
-    TODO: Implement
     <ion-list>
-      <ion-card *ngFor="let guess of guesses; let i = index">
+      <ion-card *ngFor="let guess of guessChart; let i = index">
         <ion-card-header>{{guess.answer}}</ion-card-header><br/>
         <ion-card-content>
           <ngx-charts-bar-horizontal
-            [view]="[500,300]"
+            [view]="[500,150]"
             [results]="guess.data"
             [showXAxisLabel]="true"
             [showYAxisLabel]="true"
+            [xScaleMax]="guess.data.length"
             [yAxis]="true"
           >
           </ngx-charts-bar-horizontal>

@@ -5,6 +5,7 @@ import { Lobby } from '../../models/lobby.model';
 import { Question } from '../../models/question.model';
 import { Subscription } from 'rxjs';
 import { stringify } from '@angular/compiler/src/util';
+import { GuessChart } from 'src/app/models/Guess.model';
 
 @Component({
   selector: 'app-scoreboard',
@@ -17,36 +18,9 @@ export class ScoreboardPage implements OnInit, OnDestroy {
   public questions: Question[];
   public currentQuestion: Question;
   private lobbySubscription: Subscription;
-  private guesses = [
-    {answer:'Answer a',
-      data: [
-        { name: "a", value: 70 },
-        { name: "b", value: 20 },
-        { name: "c", value: 10 },
-        { name: "d", value: 0 },
-        { name: "e", value: 0 }
-      ]
-    },
-    {answer:'Answer b',
-      data: [
-        { name: "a", value: 50 },
-        { name: "b", value: 30 },
-        { name: "c", value: 10 },
-        { name: "d", value: 10 },
-        { name: "e", value: 0 }
-      ]
-    },
-    {
-      answer:'Answer c',
-      data: [
-        { name: "a", value: 50 },
-        { name: "b", value: 20 },
-        { name: "c", value: 10 },
-        { name: "d", value: 10 },
-        { name: "e", value: 10 }
-      ]},
+  private dimensions;
 
-  ];
+  public guessChart: GuessChart[] = [];
 
   constructor(
     private router: Router,
@@ -63,24 +37,26 @@ export class ScoreboardPage implements OnInit, OnDestroy {
       let formattedGuesses = new Map<string, Map<string, number>>();
 
       this.lobby.userGuesses.forEach(userGuess => {
-          userGuess.guesses.forEach(guess => {
-            if(formattedGuesses.has(guess.answer)) {
-              let nestedMap = formattedGuesses.get(guess.answer);
-              if(nestedMap.has(this.getUsername(guess.userId))) {
-                nestedMap.set(this.getUsername(guess.userId), nestedMap.get(this.getUsername(guess.userId)) + 1);
-              } else {
-                const guessMap = new Map<string, number>();
-                guessMap.set(this.getUsername(guess.userId), 1);
-                formattedGuesses.set(guess.answer, guessMap);
-              }
+        console.log(userGuess);
+        userGuess.guesses.forEach(guess => {
+          let guessChart: GuessChart = this.guessChart.find(x => x.answer === guess.answer);
+          if (!guessChart) {
+            let newGuessChart: GuessChart = {answer: guess.answer, data: [{name: this.getUsername(guess.userId), value: 1}]}
+            this.guessChart.push(newGuessChart);
+          } else {
+            let guessData = guessChart.data.find(x => x.name === this.getUsername(guess.userId));
+            let index = guessChart.data.findIndex(x => x.name === this.getUsername(guess.userId));
+            if(!guessData) {
+              guessChart.data.push({name: this.getUsername(guess.userId), value: 1});
             } else {
-              const guessMap = new Map<string, number>();
-              guessMap.set(this.getUsername(guess.userId), 1);
-              formattedGuesses.set(guess.answer, guessMap);
+              guessData.value++;
+              guessChart.data[index] = guessData;
+              console.log('else');
             }
-          });
+          }
+        });
       });
-
+      console.log(this.guessChart);
       formattedGuesses.forEach((userGuess, question) => {
         console.log(question, userGuess);
       })
@@ -89,6 +65,10 @@ export class ScoreboardPage implements OnInit, OnDestroy {
 
   getUsername(userID: string) {
     return this.lobby.users?.find((x) => x.id === userID)?.username;
+  }
+
+  getDimensions(guess: GuessChart) {
+    return [guess.data.length * 50, window.innerWidth];
   }
 
   ngOnDestroy() {

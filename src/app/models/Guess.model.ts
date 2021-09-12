@@ -3,5 +3,14 @@ export interface UserGuess {
   guesses:
    { answer: string,
     userId: string}[]
-  
+
+}
+
+
+export interface GuessChart {
+  answer: string;
+  data: {
+    name: string;
+    value: number;
+  }[];
 }
