@@ -16,6 +16,36 @@ export class ScoreboardPage implements OnInit, OnDestroy {
   public questions: Question[];
   public currentQuestion: Question;
   private lobbySubscription: Subscription;
+  private guesses = [
+    {answer:'Answer a',
+      data: [
+        { name: "a", value: 70 },
+        { name: "b", value: 20 },
+        { name: "c", value: 10 },
+        { name: "d", value: 0 },
+        { name: "e", value: 0 }
+      ]
+    },
+    {answer:'Answer b',
+      data: [
+        { name: "a", value: 50 },
+        { name: "b", value: 30 },
+        { name: "c", value: 10 },
+        { name: "d", value: 10 },
+        { name: "e", value: 0 }
+      ]
+    },
+    {
+      answer:'Answer c',
+      data: [
+        { name: "a", value: 50 },
+        { name: "b", value: 20 },
+        { name: "c", value: 10 },
+        { name: "d", value: 10 },
+        { name: "e", value: 10 }
+      ]},
+
+  ];
 
   constructor(
     private router: Router,
