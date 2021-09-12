@@ -78,8 +78,14 @@ export class RateAnswersPage implements OnInit {
     }
     this.lobbySubscription.unsubscribe();
     this.lobbyService.addGuess(userGuess).then((_) => {
-      this.router.navigate(['scoreboard'], { queryParamsHandling: 'preserve' });
+      setTimeout(() => {
+        this.router
+          .navigate(['scoreboard'], { queryParamsHandling: 'preserve' })
+          .then((log) => console.log(log))
+          .catch((error) => console.error(error));
+      }, 500);
     });
+
   }
 
   get answers(): FormArray {
