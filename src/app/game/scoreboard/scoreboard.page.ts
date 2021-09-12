@@ -42,9 +42,6 @@ export class ScoreboardPage implements OnInit, OnDestroy {
           animated: true,
           animationDirection: 'forward',
         });
-        // this.router.navigate(['answer-question'], {
-        //   queryParamsHandling: 'preserve',
-        // });
       }
       this.lobby = lobby;
       this.questions = lobby.questions;
@@ -125,10 +122,6 @@ export class ScoreboardPage implements OnInit, OnDestroy {
           animated: true,
           animationDirection: 'forward',
         });
-
-        // this.router.navigate(['answer-question'], {
-        //   queryParamsHandling: 'preserve',
-        // });
       });
     }
   }

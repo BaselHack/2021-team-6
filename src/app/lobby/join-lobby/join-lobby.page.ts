@@ -47,10 +47,6 @@ export class JoinLobbyPage implements OnInit {
         console.log(`Lobby to join: ${this.code.value}`);
         const queryParams = `?userId=${userId}&lobbyCode=${this.code.value}`;
               this.navCtrl.navigateRoot('/view-lobby' + queryParams, { animated: true, animationDirection: 'forward' });
-
-        // this.router.navigate(['view-lobby'], {
-        //   queryParams: { userId: userId, lobbyCode: this.code.value },
-        // });
       })
       .catch((error) => {
         console.error('Error adding document: ', error);

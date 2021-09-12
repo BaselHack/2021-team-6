@@ -55,10 +55,6 @@ export class ViewLobbyPage implements OnInit {
             animated: true,
             animationDirection: 'forward',
           });
-
-          // this.router.navigate(['answer-question'], {
-          //   queryParamsHandling: 'preserve',
-          // });
         }
       },
       (error) => {
@@ -91,10 +87,6 @@ export class ViewLobbyPage implements OnInit {
       animated: true,
       animationDirection: 'forward',
     });
-
-    // this.router.navigate(['/answer-question'], {
-    //   queryParamsHandling: 'preserve',
-    // });
   }
 
   async presentAlert() {

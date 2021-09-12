@@ -70,13 +70,10 @@ export class AnswerQuestionPage implements OnInit {
           console.log(answer);
           // todo: fix this properly
           const queryParams = `?userId=${userId}&lobbyCode=${this.lobbyCode}`;
-          this.navCtrl.navigateRoot('/rate-answers' + queryParams, { animated: true, animationDirection: 'forward' });
-          // setTimeout(() => {
-          //   this.router
-          //     .navigate(['/rate-answers'], { queryParamsHandling: 'preserve' })
-          //     .then((log) => console.log(log))
-          //     .catch((error) => console.error(error));
-          // }, 500);
+          this.navCtrl.navigateRoot('/rate-answers' + queryParams, {
+            animated: true,
+            animationDirection: 'forward',
+          });
         })
         .catch((error) => console.error(`whatever: ${error}`));
     }

@@ -54,6 +54,7 @@ export class RateAnswersPage implements OnInit {
           );
         }
       });
+      this.lobbySubscription.unsubscribe();
     });
   }
 
@@ -87,10 +88,6 @@ export class RateAnswersPage implements OnInit {
           animated: true,
           animationDirection: 'forward',
         });
-        // this.router
-        //   .navigate(['scoreboard'], { queryParamsHandling: 'preserve' })
-        //   .then((log) => console.log(log))
-        //   .catch((error) => console.error(error));
       }, 500);
     });
   }

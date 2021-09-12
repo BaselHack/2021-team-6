@@ -72,10 +72,6 @@ export class CreateLobbyPage implements OnInit {
           animated: true,
           animationDirection: 'forward',
         });
-
-        // this.router.navigate(['view-lobby'], {
-        //   queryParams: { userId, lobbyCode: lobbyCode },
-        // });
       })
       .catch((error) => {
         console.error('Error adding document: ', error);
