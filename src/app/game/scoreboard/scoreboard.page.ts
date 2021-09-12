@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { LobbyService } from '../../services/lobby.service';
 import { Lobby } from '../../models/lobby.model';
 import { Question } from '../../models/question.model';
 import { Subscription } from 'rxjs';
-import { stringify } from '@angular/compiler/src/util';
-import { GuessChart, UserGuess } from 'src/app/models/Guess.model';
+import { GuessChart } from 'src/app/models/Guess.model';
 
 @Component({
   selector: 'app-scoreboard',
@@ -80,19 +78,11 @@ export class ScoreboardPage implements OnInit, OnDestroy {
   }
 
   barCustomColors(guess: GuessChart) {
-    // console.log(guess)
     return guess.data.map((answer) =>
       answer.correct
-        ? { name: answer.name, value: '#07aa08' }
-        : { name: answer.name, value: '#aa0808' }
+        ? { name: answer.name, value: '#5ebf2a' }
+        : { name: answer.name, value: '#bf2a2a' }
     );
-    return [
-      // { name: "Phil", value: '#aa0808' },
-      { name: 'xx', value: '#aa0808' },
-      { name: 'Megi', value: '#07aa08' },
-      { name: 'User d', value: '#aa0808' },
-      { name: 'User e', value: '#aa0808' },
-    ];
   }
 
   getUsername(userID: string) {
