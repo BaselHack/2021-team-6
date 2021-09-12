@@ -43,17 +43,19 @@ export class RateAnswersPage implements OnInit {
       this.ownUser = this.userService.getUser(lobby);
       console.log(this.ownUser);
 
-      this.lobby.answers.forEach((answer) => {
-        console.log(this.answers);
-        if (answer.userID !== this.ownUser.id && this.answers.length === 0) {
-          this.answers.push(
-            this.fb.group({
-              userID: [''],
-              answer: [answer.answer],
-            })
-          );
-        }
-      });
+      if (this.answers.length === 0) {
+        this.lobby.answers.forEach((answer) => {
+          console.log(this.answers);
+          if (answer.userID !== this.ownUser.id) {
+            this.answers.push(
+              this.fb.group({
+                userID: [''],
+                answer: [answer.answer],
+              })
+            );
+          }
+        });
+      }
     });
   }
 
