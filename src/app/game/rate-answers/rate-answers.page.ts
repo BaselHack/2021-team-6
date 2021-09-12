@@ -52,6 +52,7 @@ export class RateAnswersPage implements OnInit {
           );
         }
       });
+      this.lobbySubscription.unsubscribe();
     });
   }
 
@@ -76,7 +77,6 @@ export class RateAnswersPage implements OnInit {
         userId: this.userIdByIndex(i).value,
       });
     }
-    this.lobbySubscription.unsubscribe();
     this.lobbyService.addGuess(userGuess).then((_) => {
       setTimeout(() => {
         this.router

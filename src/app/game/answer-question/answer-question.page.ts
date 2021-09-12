@@ -43,6 +43,7 @@ export class AnswerQuestionPage implements OnInit {
       console.log('lobbyupdated');
       this.lobby = lobby;
       this.questions = lobby.questions;
+      this.lobbySubscription.unsubscribe();
     });
 
     this.answerQuestionForm = this.fb.group({
@@ -61,7 +62,6 @@ export class AnswerQuestionPage implements OnInit {
         answer: answerText,
         userID: userId,
       };
-      this.lobbySubscription.unsubscribe();
       this.lobbyService
         .addAnswer(answer)
         .finally(() => {
