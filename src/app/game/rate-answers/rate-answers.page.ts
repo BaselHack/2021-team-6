@@ -45,7 +45,7 @@ export class RateAnswersPage implements OnInit {
 
       this.lobby.answers.forEach((answer) => {
         console.log(this.answers);
-        if (answer.userID !== this.ownUser.id) {
+        if (answer.userID !== this.ownUser.id && this.answers.length === 0) {
           this.answers.push(
             this.fb.group({
               userID: [''],
@@ -54,7 +54,6 @@ export class RateAnswersPage implements OnInit {
           );
         }
       });
-      this.lobbySubscription.unsubscribe();
     });
   }
 
@@ -62,6 +61,7 @@ export class RateAnswersPage implements OnInit {
     if (event.action === 'done') {
       console.log('Submitting Guesses...');
       this.rateAnswer();
+      this.lobbySubscription.unsubscribe();
     }
   }
 
