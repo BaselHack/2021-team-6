@@ -19,6 +19,8 @@
             [showYAxisLabel]="true"
             [xScaleMax]="guess.data.length"
             [yAxis]="true"
+            [animations]="barAnimations"
+            [customColors]="barCustomColors(guess)"
           >
           </ngx-charts-bar-horizontal>
         </ion-card-content>

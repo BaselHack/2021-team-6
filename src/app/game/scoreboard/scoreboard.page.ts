@@ -19,7 +19,6 @@ export class ScoreboardPage implements OnInit, OnDestroy {
   public currentQuestion: Question;
   private lobbySubscription: Subscription;
   private dimensions;
-
   public guessChart: GuessChart[] = [];
 
   constructor(
@@ -56,11 +55,22 @@ export class ScoreboardPage implements OnInit, OnDestroy {
           }
         });
       });
-      console.log(this.guessChart);
+
       formattedGuesses.forEach((userGuess, question) => {
         console.log(question, userGuess);
       })
     });
+  }
+
+  barCustomColors(guess) {
+    // console.log(guess)
+    return  [
+      // { name: "Phil", value: '#aa0808' },
+      { name: "xx", value: '#aa0808'  },
+      { name: "Megi", value: '#07aa08'  },
+      { name: "User d", value: '#aa0808'  },
+      { name: "User e", value: '#aa0808'  }
+    ]
   }
 
   getUsername(userID: string) {
