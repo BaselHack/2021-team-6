@@ -54,7 +54,6 @@ export class RateAnswersPage implements OnInit {
           );
         }
       });
-      this.lobbySubscription.unsubscribe();
     });
   }
 
