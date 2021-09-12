@@ -48,6 +48,8 @@ export class ViewLobbyPage implements OnInit {
           this.presentAlert();
         }
         if (lobby.state === 1) {
+          this.lobbySubscription.unsubscribe();
+
           const queryParams = `?userId=${this.user.id}&lobbyCode=${this.lobbyCode}`;
           this.navCtrl.navigateRoot('/answer-question' + queryParams, {
             animated: true,
