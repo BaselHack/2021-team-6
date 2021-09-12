@@ -27,4 +27,14 @@
       </ion-card>
     </ion-list>
   </div>
+
+  <ion-button
+      *ngIf="user.isHost"
+      size="large"
+      color="primary"
+      [disabled]="!isHost"
+      (click)="nextQuestion()"
+      >Start</ion-button
+    >
+
 </ion-content>

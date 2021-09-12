@@ -62,6 +62,15 @@ export class LobbyService {
     });
   }
 
+  public nextQuestion(newIndex: number) {
+    return this.afs.collection('lobbies').doc(this.getLobbyCode()).update({
+      answers: [],
+      userGuesses: [],
+      state: 1,
+      index: newIndex
+    });
+  }
+
   public addAnswer(answer: Answer) {
     return this.afs
       .collection('lobbies')

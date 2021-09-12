@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LobbyService } from '../../services/lobby.service';
-import { Lobby } from '../../models/lobby.model';
+import { Lobby, User } from '../../models/lobby.model';
 import { Question } from '../../models/question.model';
 import { Subscription } from 'rxjs';
 import { GuessChart } from 'src/app/models/Guess.model';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-scoreboard',
@@ -19,19 +21,30 @@ export class ScoreboardPage implements OnInit, OnDestroy {
   public barColors;
   private lobbySubscription: Subscription;
   private initialized = false;
+  private user: User;
+  private index;
 
-  constructor(private lobbyService: LobbyService) {}
+  constructor(private lobbyService: LobbyService, private router: Router, private userService: UserService) {}
 
   ngOnInit() {
     this.lobbyCode = this.lobbyService.getLobbyCode();
     this.lobbySubscription = this.lobbyService.getLobby().subscribe((lobby) => {
+      console.log('this.lobby', this.lobby);
+      console.log('lobby', lobby);
+      if(this.lobby !== null && this.lobby.index !== lobby.index) {
+        this.router.navigate(['answer-question'], {
+          queryParamsHandling: 'preserve',});
+      }
       this.lobby = lobby;
       this.questions = lobby.questions;
+      this.user = this.userService.getUser(lobby);
 
       if (!this.initialized) {
         this.initChartdata();
         this.initialized = true;
       }
+
+
     });
   }
 
@@ -91,6 +104,17 @@ export class ScoreboardPage implements OnInit, OnDestroy {
         ? { name: answer.name, value: '#5ebf2a' }
         : { name: answer.name, value: '#bf2a2a' }
     );
+  }
+
+  nextQuestion() {
+    console.log(this.lobby.questions.length - 1);
+    console.log(this.lobby.index);
+    if(this.lobby.questions.length - 1 !== this.lobby.index) {
+      this.lobbyService.nextQuestion(this.lobby.index + 1).then(_ => {
+        this.router.navigate(['answer-question'], {
+          queryParamsHandling: 'preserve',});
+      });
+    }
   }
 
   getUsername(userID: string) {
