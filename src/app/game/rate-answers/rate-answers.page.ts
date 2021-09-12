@@ -79,19 +79,19 @@ export class RateAnswersPage implements OnInit {
       });
     }
     this.lobbyService.addGuess(userGuess).then((_) => {
-      const queryParams = `?userId=${
-        this.ownUser.id
-      }&lobbyCode=${this.lobbyService.getLobbyCode()}`;
-      this.navCtrl.navigateRoot('/scoreboard' + queryParams, {
-        animated: true,
-        animationDirection: 'forward',
-      });
-      // setTimeout(() => {
-      //   this.router
-      //     .navigate(['scoreboard'], { queryParamsHandling: 'preserve' })
-      //     .then((log) => console.log(log))
-      //     .catch((error) => console.error(error));
-      // }, 500);
+      setTimeout(() => {
+        const queryParams = `?userId=${
+          this.ownUser.id
+        }&lobbyCode=${this.lobbyService.getLobbyCode()}`;
+        this.navCtrl.navigateRoot('/scoreboard' + queryParams, {
+          animated: true,
+          animationDirection: 'forward',
+        });
+        // this.router
+        //   .navigate(['scoreboard'], { queryParamsHandling: 'preserve' })
+        //   .then((log) => console.log(log))
+        //   .catch((error) => console.error(error));
+      }, 500);
     });
   }
 
