@@ -26,14 +26,16 @@
         </ion-card-content>
       </ion-card>
     </ion-list>
-  </div>
 
-  <ion-button
+    <ion-button
       *ngIf="user.isHost"
       size="large"
       color="primary"
       (click)="nextQuestion()"
       >Start</ion-button
     >
+  </div>
+
+
 
 </ion-content>
