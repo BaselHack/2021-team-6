@@ -1,29 +1,46 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons class="ion-padding-end" slot="end">
+      <ion-text color="danger">
+        <countdown
+          class="countdown"
+          [config]="{leftTime:20, format: 'ss'}"
+          (event)="onCountDownDone($event)"
+        ></countdown>
+      </ion-text>
+    </ion-buttons>
     <ion-title>rate-answers</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="selectedQuestion && ownUser">
-  <h2>{{selectedQuestion.question}}</h2>
+  <h2 class="ion-padding-horizontal">{{selectedQuestion.question}}</h2>
   <form [formGroup]="rateAnswerForm" (ngSubmit)="rateAnswer()">
-    <ion-list>
-      <div formArrayName="answers" *ngFor="let answer of answers.controls; let i = index">
+    <div
+      formArrayName="answers"
+      *ngFor="let answer of answers.controls; let i = index"
+    >
+      <ion-card>
         <ng-container [formGroupName]="i">
-          <ion-label>{{answerByIndex(i).value}}</ion-label>
-          <ion-select formControlName="userID">
-            <div *ngFor="let user of users">
-              <ion-select-option *ngIf="user.id !== ownUser.id" value="{{user.id}}"
-                >{{user.username}}</ion-select-option
-              >
-            </div>
-          </ion-select>
+          <ion-card-header>
+            <h4>
+              <ion-label>{{answerByIndex(i).value}}</ion-label>
+            </h4>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-select formControlName="userID" placeholder="Select player">
+              <div *ngFor="let user of users">
+                <ion-select-option
+                  *ngIf="user.id !== ownUser.id"
+                  value="{{user.id}}"
+                  >{{user.username}}</ion-select-option
+                >
+              </div>
+            </ion-select>
+          </ion-card-content>
         </ng-container>
-      </div>
-      <ion-item>
-        <ion-button type="submit">Join</ion-button>
-      </ion-item>
-
-    </ion-list>
-</form>
+      </ion-card>
+      <ion-button (click)="rateAnswer()">Join</ion-button>
+    </div>
+  </form>
 </ion-content>

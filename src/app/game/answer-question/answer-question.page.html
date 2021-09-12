@@ -1,28 +1,35 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>answer-question</ion-title>
+    <ion-buttons class="ion-padding-end" slot="end">
+      <ion-text color="danger">
+        <countdown
+          class="countdown"
+          [config]="{leftTime:20, format: 'ss'}"
+          (event)="onCountDownDone($event)"
+        ></countdown>
+      </ion-text>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <h2>Lobby Code: {{lobbyCode}}</h2>
+  <h2 class="ion-padding-horizontal">Lobby Code: {{lobbyCode}}</h2>
   <div *ngIf="lobby">
     <form [formGroup]="answerQuestionForm" (ngSubmit)="onAnswerQuestion()">
-      <countdown
-        [config]="{leftTime:20, format: 'm:ss'}"
-        (event)="onCountDownDone($event)"
-      ></countdown>
-      <ion-list>
-        <ion-item>
-          <ion-label>{{questions[lobby.index].question}}</ion-label>
-        </ion-item>
+      <ion-card>
+        <ion-card-header>
+            <h4>
+              <ion-label>{{questions[lobby.index].question}}</ion-label>
+            </h4>
+        </ion-card-header>
         <ion-item>
           <ion-textarea
             formControlName="answer"
             placeholder="answer"
           ></ion-textarea>
         </ion-item>
-      </ion-list>
+      </ion-card>
     </form>
   </div>
 </ion-content>

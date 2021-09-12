@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CountdownEvent } from 'ngx-countdown';
 import { Subscription } from 'rxjs';
 import { UserGuess } from 'src/app/models/Guess.model';
 import { Lobby, User } from 'src/app/models/lobby.model';
@@ -52,6 +53,13 @@ export class RateAnswersPage implements OnInit {
         }
       });
     });
+  }
+
+  public onCountDownDone(event: CountdownEvent): void {
+    if (event.action === 'done') {
+      console.log('countdown done');
+      // this.rateAnswer();
+    }
   }
 
   rateAnswer() {
