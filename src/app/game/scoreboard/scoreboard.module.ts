@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { CountdownModule } from 'ngx-countdown';
 import { NgxChartsModule }from '@swimlane/ngx-charts';
 import { IonicModule } from '@ionic/angular';
-import { BrowserModule } from '@angular/platform-browser';
 import { ScoreboardPageRoutingModule } from './scoreboard-routing.module';
 
 import { ScoreboardPage } from './scoreboard.page';
