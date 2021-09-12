@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { CountdownEvent } from 'ngx-countdown';
 import { Subscription } from 'rxjs';
 import { UserGuess } from 'src/app/models/Guess.model';
@@ -24,6 +25,7 @@ export class RateAnswersPage implements OnInit {
   private lobbySubscription: Subscription;
 
   constructor(
+    private navCtrl: NavController,
     private lobbyService: LobbyService,
     private userService: UserService,
     private fb: FormBuilder,
@@ -78,14 +80,20 @@ export class RateAnswersPage implements OnInit {
       });
     }
     this.lobbyService.addGuess(userGuess).then((_) => {
-      setTimeout(() => {
-        this.router
-          .navigate(['scoreboard'], { queryParamsHandling: 'preserve' })
-          .then((log) => console.log(log))
-          .catch((error) => console.error(error));
-      }, 500);
+      const queryParams = `?userId=${
+        this.ownUser.id
+      }&lobbyCode=${this.lobbyService.getLobbyCode()}`;
+      this.navCtrl.navigateRoot('/scoreboard' + queryParams, {
+        animated: true,
+        animationDirection: 'forward',
+      });
+      // setTimeout(() => {
+      //   this.router
+      //     .navigate(['scoreboard'], { queryParamsHandling: 'preserve' })
+      //     .then((log) => console.log(log))
+      //     .catch((error) => console.error(error));
+      // }, 500);
     });
-
   }
 
   get answers(): FormArray {

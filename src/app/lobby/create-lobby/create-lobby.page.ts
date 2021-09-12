@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Deck } from 'src/app/models/deck.model';
 import { Lobby, User } from 'src/app/models/lobby.model';
@@ -20,6 +21,7 @@ export class CreateLobbyPage implements OnInit {
   private deckSubscription: Subscription;
 
   constructor(
+    private navCtrl: NavController,
     public lobbyService: LobbyService,
     public fb: FormBuilder,
     public router: Router,
@@ -65,9 +67,15 @@ export class CreateLobbyPage implements OnInit {
     this.lobbyService
       .createLobby(lobbyCode, lobby)
       .then((docRef) => {
-        this.router.navigate(['view-lobby'], {
-          queryParams: { userId, lobbyCode: lobbyCode },
+        const queryParams = `?userId=${userId}&lobbyCode=${lobbyCode}`;
+        this.navCtrl.navigateRoot('/view-lobby' + queryParams, {
+          animated: true,
+          animationDirection: 'forward',
         });
+
+        // this.router.navigate(['view-lobby'], {
+        //   queryParams: { userId, lobbyCode: lobbyCode },
+        // });
       })
       .catch((error) => {
         console.error('Error adding document: ', error);

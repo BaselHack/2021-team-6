@@ -14,6 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CountdownEvent } from 'ngx-countdown';
 import { Answer } from 'src/app/models/answer.model';
 import { Subscription } from 'rxjs';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-answer-question',
@@ -31,6 +32,7 @@ export class AnswerQuestionPage implements OnInit {
   private lobbySubscription: Subscription;
 
   constructor(
+    private navCtrl: NavController,
     private router: Router,
     private route: ActivatedRoute,
     private lobbyService: LobbyService,
@@ -67,12 +69,14 @@ export class AnswerQuestionPage implements OnInit {
         .finally(() => {
           console.log(answer);
           // todo: fix this properly
-          setTimeout(() => {
-            this.router
-              .navigate(['/rate-answers'], { queryParamsHandling: 'preserve' })
-              .then((log) => console.log(log))
-              .catch((error) => console.error(error));
-          }, 500);
+          const queryParams = `?userId=${userId}&lobbyCode=${this.lobbyCode}`;
+          this.navCtrl.navigateRoot('/rate-answers' + queryParams, { animated: true, animationDirection: 'forward' });
+          // setTimeout(() => {
+          //   this.router
+          //     .navigate(['/rate-answers'], { queryParamsHandling: 'preserve' })
+          //     .then((log) => console.log(log))
+          //     .catch((error) => console.error(error));
+          // }, 500);
         })
         .catch((error) => console.error(`whatever: ${error}`));
     }

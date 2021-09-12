@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { GuessChart } from 'src/app/models/Guess.model';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-scoreboard',
@@ -22,9 +23,9 @@ export class ScoreboardPage implements OnInit, OnDestroy {
   public user: User;
   private lobbySubscription: Subscription;
   private initialized = false;
-  private index;
 
   constructor(
+    private navCtrl: NavController,
     private lobbyService: LobbyService,
     private router: Router,
     private userService: UserService
@@ -36,9 +37,14 @@ export class ScoreboardPage implements OnInit, OnDestroy {
       console.log('this.lobby', this.lobby);
       console.log('lobby', lobby);
       if (this.lobby && this.lobby.index !== lobby.index) {
-        this.router.navigate(['answer-question'], {
-          queryParamsHandling: 'preserve',
+        const queryParams = `?userId=${this.user.id}&lobbyCode=${this.lobbyCode}`;
+        this.navCtrl.navigateRoot('/answer-question' + queryParams, {
+          animated: true,
+          animationDirection: 'forward',
         });
+        // this.router.navigate(['answer-question'], {
+        //   queryParamsHandling: 'preserve',
+        // });
       }
       this.lobby = lobby;
       this.questions = lobby.questions;
@@ -114,9 +120,15 @@ export class ScoreboardPage implements OnInit, OnDestroy {
     console.log(this.lobby.index);
     if (this.lobby.questions.length - 1 !== this.lobby.index) {
       this.lobbyService.nextQuestion(this.lobby.index + 1).then((_) => {
-        this.router.navigate(['answer-question'], {
-          queryParamsHandling: 'preserve',
+        const queryParams = `?userId=${this.user.id}&lobbyCode=${this.lobbyCode}`;
+        this.navCtrl.navigateRoot('/answer-question' + queryParams, {
+          animated: true,
+          animationDirection: 'forward',
         });
+
+        // this.router.navigate(['answer-question'], {
+        //   queryParamsHandling: 'preserve',
+        // });
       });
     }
   }

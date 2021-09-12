@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Deck } from 'src/app/models/deck.model';
 import { Lobby, User } from 'src/app/models/lobby.model';
@@ -25,6 +25,7 @@ export class ViewLobbyPage implements OnInit {
   private lobbySubscription: Subscription;
 
   constructor(
+    private navCtrl: NavController,
     private lobbyService: LobbyService,
     private router: Router,
     private route: ActivatedRoute,
@@ -47,9 +48,15 @@ export class ViewLobbyPage implements OnInit {
           this.presentAlert();
         }
         if (lobby.state === 1) {
-          this.router.navigate(['answer-question'], {
-            queryParamsHandling: 'preserve',
+          const queryParams = `?userId=${this.user.id}&lobbyCode=${this.lobbyCode}`;
+          this.navCtrl.navigateRoot('/answer-question' + queryParams, {
+            animated: true,
+            animationDirection: 'forward',
           });
+
+          // this.router.navigate(['answer-question'], {
+          //   queryParamsHandling: 'preserve',
+          // });
         }
       },
       (error) => {
@@ -77,9 +84,15 @@ export class ViewLobbyPage implements OnInit {
     console.log('Game started...');
     this.lobbySubscription.unsubscribe();
     this.lobbyService.updateState(1);
-    this.router.navigate(['/answer-question'], {
-      queryParamsHandling: 'preserve',
+    const queryParams = `?userId=${this.user.id}&lobbyCode=${this.lobbyCode}`;
+    this.navCtrl.navigateRoot('/answer-question' + queryParams, {
+      animated: true,
+      animationDirection: 'forward',
     });
+
+    // this.router.navigate(['/answer-question'], {
+    //   queryParamsHandling: 'preserve',
+    // });
   }
 
   async presentAlert() {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { User } from 'src/app/models/lobby.model';
 import { LobbyService } from 'src/app/services/lobby.service';
 import { UserService } from 'src/app/services/user.service';
@@ -15,6 +16,7 @@ export class JoinLobbyPage implements OnInit {
   joinLobbyForm: FormGroup;
 
   constructor(
+    private navCtrl: NavController,
     private router: Router,
     private lobbyService: LobbyService,
     public fb: FormBuilder,
@@ -43,9 +45,12 @@ export class JoinLobbyPage implements OnInit {
       .joinLobby(this.code.value, user)
       .then((docRef) => {
         console.log(`Lobby to join: ${this.code.value}`);
-        this.router.navigate(['view-lobby'], {
-          queryParams: { userId: userId, lobbyCode: this.code.value },
-        });
+        const queryParams = `?userId=${userId}&lobbyCode=${this.code.value}`;
+              this.navCtrl.navigateRoot('/view-lobby' + queryParams, { animated: true, animationDirection: 'forward' });
+
+        // this.router.navigate(['view-lobby'], {
+        //   queryParams: { userId: userId, lobbyCode: this.code.value },
+        // });
       })
       .catch((error) => {
         console.error('Error adding document: ', error);
