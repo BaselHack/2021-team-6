@@ -10,10 +10,10 @@
   <div *ngIf="lobby">
     <ion-list>
       <ion-card *ngFor="let guess of guessChart; let i = index">
-        <ion-card-header>{{guess.answer}}</ion-card-header><br/>
+        <ion-card-header>{{guess.answer}}</ion-card-header><br />
         <ion-card-content>
           <ngx-charts-bar-horizontal
-            [view]="[500,150]"
+            [view]="guess.dimensions"
             [results]="guess.data"
             [showXAxisLabel]="true"
             [showYAxisLabel]="true"
