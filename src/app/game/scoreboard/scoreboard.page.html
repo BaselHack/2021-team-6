@@ -11,7 +11,7 @@
     <ion-list>
       <ion-card *ngFor="let guess of guessChart; let i = index">
         <ion-card-header>{{guess.answer}}</ion-card-header><br />
-        <ion-card-content>
+        <ion-card-content *ngIf="guess.data.length">
           <ngx-charts-bar-horizontal
             [view]="guess.dimensions"
             [results]="guess.data"
