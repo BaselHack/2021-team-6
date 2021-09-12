@@ -43,7 +43,7 @@ export class RateAnswersPage implements OnInit {
       this.ownUser = this.userService.getUser(lobby);
       console.log(this.ownUser);
 
-      if (this.answers.length === 0) {
+      if (this.answers.length !== this.users.length) {
         this.lobby.answers.forEach((answer) => {
           console.log(this.answers);
           if (answer.userID !== this.ownUser.id) {
