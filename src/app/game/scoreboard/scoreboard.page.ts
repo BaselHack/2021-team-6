@@ -16,7 +16,9 @@ export class ScoreboardPage implements OnInit, OnDestroy {
   public questions: Question[];
   public currentQuestion: Question;
   public guessChart: GuessChart[] = [];
+  public barColors;
   private lobbySubscription: Subscription;
+  private initialized = false;
 
   constructor(private lobbyService: LobbyService) {}
 
@@ -26,53 +28,59 @@ export class ScoreboardPage implements OnInit, OnDestroy {
       this.lobby = lobby;
       this.questions = lobby.questions;
 
-      const formattedGuesses = new Map<string, Map<string, number>>();
+      if (!this.initialized) {
+        this.initChartdata();
+        this.initialized = true;
+      }
+    });
+  }
 
-      this.lobby.userGuesses.forEach((userGuess) => {
-        console.log(userGuess);
-        userGuess.guesses.forEach((guess) => {
-          const guessChart: GuessChart = this.guessChart.find(
-            (x) => x.answer === guess.answer
-          );
+  initChartdata() {
+    this.lobby.userGuesses.forEach((userGuess) => {
+      console.log(userGuess);
+      userGuess.guesses.forEach((guess) => {
+        const guessChart: GuessChart = this.guessChart.find(
+          (x) => x.answer === guess.answer
+        );
 
-          const answer = this.lobby.answers.find(
-            (a) => a.userID === guess.userId
-          );
-          const correct = answer.answer === guess.answer;
+        const answer = this.lobby.answers.find(
+          (a) => a.userID === guess.userId
+        );
+        const correct = answer.answer === guess.answer;
 
-          if (!guessChart) {
-            const newGuessChart: GuessChart = {
-              answer: guess.answer,
-              data: [
-                { name: this.getUsername(guess.userId), value: 1, correct },
-              ],
-            };
-            this.guessChart.push(newGuessChart);
-          } else {
-            const guessData = guessChart.data.find(
-              (x) => x.name === this.getUsername(guess.userId)
-            );
-            const index = guessChart.data.findIndex(
-              (x) => x.name === this.getUsername(guess.userId)
-            );
-            if (!guessData) {
-              guessChart.data.push({
+        if (!guessChart) {
+          const newGuessChart: GuessChart = {
+            answer: guess.answer,
+            data: [
+              {
                 name: this.getUsername(guess.userId),
                 value: 1,
                 correct,
-              });
-            } else {
-              guessData.value++;
-              guessChart.data[index] = guessData;
-              console.log('else');
-            }
-            guessChart.dimensions = this.getDimensions(guessChart);
+              },
+            ],
+          };
+          this.guessChart.push(newGuessChart);
+        } else {
+          const guessData = guessChart.data.find(
+            (x) => x.name === this.getUsername(guess.userId)
+          );
+          const index = guessChart.data.findIndex(
+            (x) => x.name === this.getUsername(guess.userId)
+          );
+          if (!guessData) {
+            guessChart.data.push({
+              name: this.getUsername(guess.userId),
+              value: 1,
+              correct,
+            });
+          } else {
+            guessData.value++;
+            guessChart.data[index] = guessData;
+            console.log('else');
           }
-        });
-      });
-
-      formattedGuesses.forEach((userGuess, question) => {
-        console.log(question, userGuess);
+          guessChart.dimensions = this.getDimensions(guessChart);
+          guessChart.color = this.barCustomColors(guessChart);
+        }
       });
     });
   }

@@ -11,4 +11,5 @@ export interface GuessChart {
     value: number;
     correct?: boolean;
   }[];
+  color?: { name: string; value: string }[];
 }
