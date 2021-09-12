@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { RateAnswersPageRoutingModule } from './rate-answers-routing.module';
 
 import { RateAnswersPage } from './rate-answers.page';
+import { CountdownModule } from 'ngx-countdown';
+
 
 @NgModule({
   imports: [
@@ -14,7 +16,8 @@ import { RateAnswersPage } from './rate-answers.page';
     FormsModule,
     IonicModule,
     RateAnswersPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CountdownModule,
   ],
   declarations: [RateAnswersPage]
 })

@@ -9,7 +9,7 @@
   <div *ngIf="lobby">
     <form [formGroup]="answerQuestionForm" (ngSubmit)="onAnswerQuestion()">
       <countdown
-        [config]="{leftTime:20}"
+        [config]="{leftTime:20, format: 'm:ss'}"
         (event)="onCountDownDone($event)"
       ></countdown>
       <ion-list>
