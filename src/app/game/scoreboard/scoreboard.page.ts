@@ -4,6 +4,7 @@ import { LobbyService } from '../../services/lobby.service';
 import { Lobby } from '../../models/lobby.model';
 import { Question } from '../../models/question.model';
 import { Subscription } from 'rxjs';
+import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-scoreboard',
@@ -56,10 +57,38 @@ export class ScoreboardPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.lobbyCode = this.lobbyService.getLobbyCode();
     this.lobbySubscription = this.lobbyService.getLobby().subscribe((lobby) => {
-      console.log('lobbyupdated');
       this.lobby = lobby;
       this.questions = lobby.questions;
+
+      let formattedGuesses = new Map<string, Map<string, number>>();
+
+      this.lobby.userGuesses.forEach(userGuess => {
+          userGuess.guesses.forEach(guess => {
+            if(formattedGuesses.has(guess.answer)) {
+              let nestedMap = formattedGuesses.get(guess.answer);
+              if(nestedMap.has(this.getUsername(guess.userId))) {
+                nestedMap.set(this.getUsername(guess.userId), nestedMap.get(this.getUsername(guess.userId)) + 1);
+              } else {
+                const guessMap = new Map<string, number>();
+                guessMap.set(this.getUsername(guess.userId), 1);
+                formattedGuesses.set(guess.answer, guessMap);
+              }
+            } else {
+              const guessMap = new Map<string, number>();
+              guessMap.set(this.getUsername(guess.userId), 1);
+              formattedGuesses.set(guess.answer, guessMap);
+            }
+          });
+      });
+
+      formattedGuesses.forEach((userGuess, question) => {
+        console.log(question, userGuess);
+      })
     });
+  }
+
+  getUsername(userID: string) {
+    return this.lobby.users?.find((x) => x.id === userID)?.username;
   }
 
   ngOnDestroy() {
