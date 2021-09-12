@@ -9,6 +9,7 @@ import { Lobby, User } from '../models/lobby.model';
 import firebase from 'firebase/app';
 import { Answer } from '../models/answer.model';
 import { ActivatedRoute } from '@angular/router';
+import { UserGuess } from '../models/Guess.model';
 
 @Injectable({
   providedIn: 'root',
@@ -64,9 +65,18 @@ export class LobbyService {
   public addAnswer(answer: Answer) {
     return this.afs
       .collection('lobbies')
-      .doc(this.lobbyCode)
+      .doc(this.getLobbyCode())
       .update({
         answers: firebase.firestore.FieldValue.arrayUnion(answer),
+      });
+  }
+
+  public addGuess(userGuess: UserGuess) {
+    return this.afs
+      .collection('lobbies')
+      .doc(this.getLobbyCode())
+      .update({
+        userGuesses: firebase.firestore.FieldValue.arrayUnion(userGuess),
       });
   }
 
