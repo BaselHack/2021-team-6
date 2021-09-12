@@ -7,13 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { RateAnswersPageRoutingModule } from './rate-answers-routing.module';
 
 import { RateAnswersPage } from './rate-answers.page';
+import { CountdownModule } from 'ngx-countdown';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RateAnswersPageRoutingModule
+    RateAnswersPageRoutingModule,
+    CountdownModule,
   ],
   declarations: [RateAnswersPage]
 })
