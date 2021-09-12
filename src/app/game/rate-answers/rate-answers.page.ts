@@ -57,8 +57,8 @@ export class RateAnswersPage implements OnInit {
 
   public onCountDownDone(event: CountdownEvent): void {
     if (event.action === 'done') {
-      console.log('countdown done');
-      // this.rateAnswer();
+      console.log('Submitting Guesses...');
+      this.rateAnswer();
     }
   }
 
