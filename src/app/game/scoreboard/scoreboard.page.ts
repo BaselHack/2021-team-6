@@ -62,7 +62,7 @@ export class ScoreboardPage implements OnInit, OnDestroy {
         const answer = this.lobby.answers.find(
           (a) => a.userID === guess.userId
         );
-        const correct = answer.answer === guess.answer;
+        const correct = answer && answer.answer === guess.answer;
 
         if (!guessChart) {
           const newGuessChart: GuessChart = {
