@@ -9,5 +9,6 @@ export interface GuessChart {
   data: {
     name: string;
     value: number;
+    correct?: boolean;
   }[];
 }

@@ -5,7 +5,7 @@ import { Lobby } from '../../models/lobby.model';
 import { Question } from '../../models/question.model';
 import { Subscription } from 'rxjs';
 import { stringify } from '@angular/compiler/src/util';
-import { GuessChart } from 'src/app/models/Guess.model';
+import { GuessChart, UserGuess } from 'src/app/models/Guess.model';
 
 @Component({
   selector: 'app-scoreboard',
@@ -36,10 +36,18 @@ export class ScoreboardPage implements OnInit, OnDestroy {
           const guessChart: GuessChart = this.guessChart.find(
             (x) => x.answer === guess.answer
           );
+
+          const answer = this.lobby.answers.find(
+            (a) => a.userID === guess.userId
+          );
+          const correct = answer.answer === guess.answer;
+
           if (!guessChart) {
             const newGuessChart: GuessChart = {
               answer: guess.answer,
-              data: [{ name: this.getUsername(guess.userId), value: 1 }],
+              data: [
+                { name: this.getUsername(guess.userId), value: 1, correct },
+              ],
             };
             this.guessChart.push(newGuessChart);
           } else {
@@ -53,6 +61,7 @@ export class ScoreboardPage implements OnInit, OnDestroy {
               guessChart.data.push({
                 name: this.getUsername(guess.userId),
                 value: 1,
+                correct,
               });
             } else {
               guessData.value++;
@@ -70,8 +79,13 @@ export class ScoreboardPage implements OnInit, OnDestroy {
     });
   }
 
-  barCustomColors(guess) {
+  barCustomColors(guess: GuessChart) {
     // console.log(guess)
+    return guess.data.map((answer) =>
+      answer.correct
+        ? { name: answer.name, value: '#07aa08' }
+        : { name: answer.name, value: '#aa0808' }
+    );
     return [
       // { name: "Phil", value: '#aa0808' },
       { name: 'xx', value: '#aa0808' },
