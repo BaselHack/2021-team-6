@@ -1,32 +1,33 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Lobby</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ng-container *ngIf="lobby">
-  <h2>Lobby Code: {{lobbyCode}}</h2>
-  <div>
-    <h2>Players</h2>
-    <ion-list>
-      <ion-item *ngFor="let user of lobby.users">
-        <ion-label>{{user.username}} <span *ngIf="user.isHost">(Host)</span></ion-label>
-      </ion-item>
-    </ion-list>
-  </div>
-  <ion-button
-    size="large"
-    color="danger"
-    (click)="leaveLobby()"
-  >Leave</ion-button>
-  <ion-button
-    *ngIf="user.isHost"
-    size="large"
-    color="primary"
-    [disabled]="!isHost"
-    (click)="onStartGame()"
-    >Start</ion-button
-  >
+    <h2>Lobby Code: {{lobbyCode}}</h2>
+    <div>
+      <h2>Players</h2>
+      <ion-list>
+        <ion-item *ngFor="let user of lobby.users">
+          <ion-label
+            >{{user.username}}
+            <span *ngIf="user.isHost">(Host)</span></ion-label
+          >
+        </ion-item>
+      </ion-list>
+    </div>
+    <ion-button size="large" color="tertiary" (click)="leaveLobby()"
+      >Leave</ion-button
+    >
+    <ion-button
+      *ngIf="user.isHost"
+      size="large"
+      color="primary"
+      [disabled]="!isHost"
+      (click)="onStartGame()"
+      >Start</ion-button
+    >
   </ng-container>
 </ion-content>
