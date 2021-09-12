@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Answer } from 'src/app/models/answer.model';
+import { Subscription } from 'rxjs';
 import { UserGuess } from 'src/app/models/Guess.model';
 import { Lobby, User } from 'src/app/models/lobby.model';
 import { Question } from 'src/app/models/question.model';
@@ -20,6 +20,8 @@ export class RateAnswersPage implements OnInit {
   users: User[];
   rateAnswerForm: FormGroup;
 
+  private lobbySubscription: Subscription;
+
   constructor(
     private lobbyService: LobbyService,
     private userService: UserService,
@@ -28,9 +30,9 @@ export class RateAnswersPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.rateAnswerForm = this.fb.group({answers: this.fb.array([])});
+    this.rateAnswerForm = this.fb.group({ answers: this.fb.array([]) });
 
-    this.lobbyService.getLobby().subscribe((lobby) => {
+    this.lobbySubscription = this.lobbyService.getLobby().subscribe((lobby) => {
       console.log('lobbyupdated');
       this.lobby = lobby;
       this.selectedQuestion = lobby.questions[lobby.index];
@@ -38,40 +40,43 @@ export class RateAnswersPage implements OnInit {
       this.ownUser = this.userService.getUser(lobby);
       console.log(this.ownUser);
 
-      this.lobby.answers.forEach(answer => {
-          console.log(this.answers);
-          if(answer.userID !== this.ownUser.id) {
-            this.answers.push(this.fb.group({
+      this.lobby.answers.forEach((answer) => {
+        console.log(this.answers);
+        if (answer.userID !== this.ownUser.id) {
+          this.answers.push(
+            this.fb.group({
               userID: [''],
               answer: [answer.answer],
-            }));
-          }
-        });
+            })
+          );
+        }
+      });
     });
   }
 
   rateAnswer() {
-    let userGuess: UserGuess = {
+    const userGuess: UserGuess = {
       userID: this.ownUser.id,
-      guesses: []
-    }
+      guesses: [],
+    };
 
-    for(let i = 0; i < this.answers.length; i++) {
+    for (let i = 0; i < this.answers.length; i++) {
       console.log('userID: ', this.userIdByIndex(i).value);
       console.log('answer: ', this.answerByIndex(i).value);
       userGuess.guesses.push({
         answer: this.answerByIndex(i).value,
-        userId: this.userIdByIndex(i).value
+        userId: this.userIdByIndex(i).value,
       });
     }
-
-    this.lobbyService.addGuess(userGuess).then(_ => {
-      this.router.navigate(['scoreboard'], {queryParamsHandling: 'preserve'});
+    this.lobbySubscription.unsubscribe();
+    this.lobbyService.addGuess(userGuess).then((_) => {
+      this.router.navigate(['scoreboard'], { queryParamsHandling: 'preserve' });
     });
   }
 
   get answers(): FormArray {
-    return <FormArray> this.rateAnswerForm.get('answers');
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    return <FormArray>this.rateAnswerForm.get('answers');
   }
 
   userIdByIndex(index: number) {
@@ -81,6 +86,4 @@ export class RateAnswersPage implements OnInit {
   answerByIndex(index: number) {
     return this.answers.at(index).get('answer');
   }
-
-
 }

@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './answer-question.page.html',
   styleUrls: ['./answer-question.page.scss'],
 })
-export class AnswerQuestionPage implements OnInit, OnDestroy {
+export class AnswerQuestionPage implements OnInit {
   public lobby: Lobby;
   public lobbyCode;
   public questions: Question[];
@@ -48,10 +48,6 @@ export class AnswerQuestionPage implements OnInit, OnDestroy {
     this.answerQuestionForm = this.fb.group({
       answer: ['', [Validators.required]],
     });
-  }
-
-  ngOnDestroy() {
-    // this.lobbySubscription.unsubscribe();
   }
 
   public onAnswerQuestion(): void {}

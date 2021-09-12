@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { Deck } from 'src/app/models/deck.model';
 import { Lobby, User } from 'src/app/models/lobby.model';
 import { DeckService } from 'src/app/services/deck.service';
@@ -21,6 +22,8 @@ export class ViewLobbyPage implements OnInit {
 
   public decks: Deck[];
 
+  private lobbySubscription: Subscription;
+
   constructor(
     private lobbyService: LobbyService,
     private router: Router,
@@ -35,7 +38,7 @@ export class ViewLobbyPage implements OnInit {
     this.lobbyCode = this.lobbyService.getLobbyCode();
     const userId = this.route.snapshot.queryParamMap.get('userId');
 
-    this.lobbyService.getLobby().subscribe(
+    this.lobbySubscription = this.lobbyService.getLobby().subscribe(
       (lobby) => {
         this.lobby = lobby;
         if (lobby) {
@@ -44,7 +47,9 @@ export class ViewLobbyPage implements OnInit {
           this.presentAlert();
         }
         if (lobby.state === 1) {
-          this.router.navigate(['answer-question'], { queryParamsHandling: 'preserve' });
+          this.router.navigate(['answer-question'], {
+            queryParamsHandling: 'preserve',
+          });
         }
       },
       (error) => {
@@ -56,6 +61,7 @@ export class ViewLobbyPage implements OnInit {
   }
 
   leaveLobby() {
+    this.lobbySubscription.unsubscribe();
     if (this.user.isHost) {
       this.lobbyService.destroyLobby(this.lobbyCode).then((_) => {
         this.router.navigateByUrl('/home');
@@ -69,6 +75,7 @@ export class ViewLobbyPage implements OnInit {
 
   public onStartGame(): void {
     console.log('Game started...');
+    this.lobbySubscription.unsubscribe();
     this.lobbyService.updateState(1);
     this.router.navigate(['/answer-question'], {
       queryParamsHandling: 'preserve',
@@ -76,6 +83,7 @@ export class ViewLobbyPage implements OnInit {
   }
 
   async presentAlert() {
+    this.lobbySubscription.unsubscribe();
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Lobby closed by host',

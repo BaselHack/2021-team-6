@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Deck } from 'src/app/models/deck.model';
 import { Lobby, User } from 'src/app/models/lobby.model';
 import { DeckService } from 'src/app/services/deck.service';
@@ -17,6 +17,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class CreateLobbyPage implements OnInit {
   createLobbyForm: FormGroup;
   decks: Deck[];
+  private deckSubscription: Subscription;
 
   constructor(
     public lobbyService: LobbyService,
@@ -33,7 +34,7 @@ export class CreateLobbyPage implements OnInit {
       deck: ['', [Validators.required]],
     });
 
-    this.deckSvc.getAllDecks().subscribe((decks) => {
+    this.deckSubscription = this.deckSvc.getAllDecks().subscribe((decks) => {
       this.decks = decks;
     });
   }
@@ -60,6 +61,7 @@ export class CreateLobbyPage implements OnInit {
       questions: this.deck.questions,
       users: [user],
     };
+    this.deckSubscription.unsubscribe();
     this.lobbyService
       .createLobby(lobbyCode, lobby)
       .then((docRef) => {
